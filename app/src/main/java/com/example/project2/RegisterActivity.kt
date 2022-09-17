@@ -56,6 +56,11 @@ class RegisterActivity : AppCompatActivity() {
                                         intent.putExtra("email", email)
                                         startActivity(intent)
                                         finish()
+                                        Toast.makeText(
+                                            this,
+                                            "Authentication Successed",
+                                            Toast.LENGTH_LONG
+                                        ).show()
                                     } else {
                                         Toast.makeText(
                                             this,

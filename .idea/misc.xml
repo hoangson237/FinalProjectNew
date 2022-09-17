@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_logged_in.xml" value="0.25416666666666665" />
         <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_register.xml" value="0.25416666666666665" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/layout_item_new.xml" value="0.264" />
         <entry key="..\:/TopUp/Project(COMP1682)/Project2/app/src/main/res/drawable/custom_button.xml" value="0.2265" />
         <entry key="..\:/TopUp/Project(COMP1682)/Project2/app/src/main/res/drawable/custom_input.xml" value="0.2265" />
         <entry key="..\:/TopUp/Project(COMP1682)/Project2/app/src/main/res/layout/activity_logged_in.xml" value="0.25416666666666665" />
