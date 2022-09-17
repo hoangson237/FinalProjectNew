@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var login: Button
     lateinit var email: TextView
     lateinit var password: EditText
-    // test
+    // test 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
