@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var password: EditText
 
     lateinit var test: Button
+    lateinit var test2: Button
     // test 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,43 +26,78 @@ class MainActivity : AppCompatActivity() {
         login = findViewById(R.id.Login)
         email = findViewById(R.id.Email)
         password = findViewById(R.id.Password)
-        test = findViewById(R.id.button2);
-        auth= FirebaseAuth.getInstance()
+        test = findViewById(R.id.button4);
+        test2 = findViewById(R.id.button3);
+        auth = FirebaseAuth.getInstance()
 
 
         test.setOnClickListener {
-            var intent =Intent(this,HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        val register: TextView = findViewById(R.id.Register)
-        register.setOnClickListener {
-            var intent =Intent(this,RegisterActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        login.setOnClickListener{
-            if(checking()){
-                val email=email.text.toString()
-                val password= password.text.toString()
+            if (checking()) {
+                val email = email.text.toString()
+                val password = password.text.toString()
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            var intent = Intent(this,HomeActivity::class.java)
-                            intent.putExtra("email",email)
+                            var intent = Intent(this, TestActivity::class.java)
+                            intent.putExtra("email", email)
                             startActivity(intent)
                             finish()
                         } else {
                             Toast.makeText(this, "Wrong Details", Toast.LENGTH_LONG).show()
                         }
                     }
-            }
-            else{
-                Toast.makeText(this,"Enter the Details",Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Enter the Details", Toast.LENGTH_LONG).show()
             }
         }
+
+        val register: Button = findViewById(R.id.Register)
+        register.setOnClickListener {
+            var intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        login.setOnClickListener {
+            if (checking()) {
+                val email = email.text.toString()
+                val password = password.text.toString()
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            var intent = Intent(this, HomeActivity::class.java)
+                            intent.putExtra("email", email)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Wrong Details", Toast.LENGTH_LONG).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(this, "Enter the Details", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        test2.setOnClickListener {
+            if (checking()) {
+                val email = email.text.toString()
+                val password = password.text.toString()
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            var intent = Intent(this, AddItemActivity::class.java)
+                            intent.putExtra("email", email)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Wrong Details", Toast.LENGTH_LONG).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(this, "Enter the Details", Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
     private fun checking():Boolean

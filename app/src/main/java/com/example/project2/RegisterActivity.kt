@@ -58,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
                                         finish()
                                         Toast.makeText(
                                             this,
-                                            "Authentication Successed",
+                                            "Authentication Successes",
                                             Toast.LENGTH_LONG
                                         ).show()
                                     } else {

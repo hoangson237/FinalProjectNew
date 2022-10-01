@@ -3,11 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.234" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/drawable/custom_button.xml" value="0.234" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/drawable/custom_input.xml" value="0.234" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/drawable/grst.xml" value="0.234" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.234" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/drawable/ic_launcher_background.xml" value="0.234" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/drawable/ic_outline_bookmarks_24.xml" value="0.234" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_add_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_home.xml" value="0.176" />
         <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_logged_in.xml" value="0.25416666666666665" />
         <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_register.xml" value="0.25416666666666665" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_test.xml" value="0.264" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/activity_test_insert_db.xml" value="0.25416666666666665" />
         <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/layout/layout_item_new.xml" value="0.264" />
+        <entry key="..\:/TopUp/COMP1786-BACH/CodeLab/FinalProjectNew/app/src/main/res/menu/bottom_nav.xml" value="0.2" />
         <entry key="..\:/TopUp/Project(COMP1682)/Project2/app/src/main/res/drawable/custom_button.xml" value="0.2265" />
         <entry key="..\:/TopUp/Project(COMP1682)/Project2/app/src/main/res/drawable/custom_input.xml" value="0.2265" />
         <entry key="..\:/TopUp/Project(COMP1682)/Project2/app/src/main/res/layout/activity_logged_in.xml" value="0.25416666666666665" />
