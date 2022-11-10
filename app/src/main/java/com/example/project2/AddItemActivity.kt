@@ -49,7 +49,7 @@ class AddItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
-
+        //ssss
         title = findViewById(R.id.edtTitle)
         author= findViewById(R.id.txtAuthor)
         contents = findViewById(R.id.edtContent)
