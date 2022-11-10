@@ -4,13 +4,13 @@
     <item
         android:id="@+id/homeFragment"
         android:title="Home"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:icon="@drawable/ic_outline_home_24"/>
     <item
-        android:id="@+id/profileFragment"
-        android:title="Profile"
-        android:icon="@drawable/custom_button"/>
+        android:id="@+id/bookmarksFragment"
+        android:title="Bookmarks"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"/>
     <item
         android:id="@+id/settingsFragment"
         android:title="Setting"
-        android:icon="@drawable/ic_launcher_foreground"/>
+        android:icon="@drawable/ic_outline_settings_24"/>
 </menu>

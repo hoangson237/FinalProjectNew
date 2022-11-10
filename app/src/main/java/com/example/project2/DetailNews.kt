@@ -1,6 +1,7 @@
 package com.example.project2
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -11,16 +12,22 @@ import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
-class TestActivity : AppCompatActivity() {
+class DetailNews : AppCompatActivity() {
 
-    lateinit var userTitle2: TextView
-    lateinit var title: TextView
+
+    lateinit var heading: TextView
     lateinit var tvdateTime: TextView
-    lateinit var description2: TextView
+    lateinit var author: TextView
     lateinit var content: TextView
-    lateinit var imageTest: ImageView
+    lateinit var imgViews: ImageView
     private lateinit var db: FirebaseFirestore
     lateinit var test: Button
+    lateinit var edit: Button
+    var titleEdit = ""
+    companion object {
+        var authorName = ""
+    }
+
 
     val firebaseDatabase = FirebaseDatabase.getInstance();
     val databaseReference = firebaseDatabase.getReference("News");
@@ -31,40 +38,52 @@ class TestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
+        setContentView(R.layout.activity_detail_news)
 
 
         // gia tri cua item
         val titleN = intent.getStringExtra("key_title")
+        val headingN = intent.getStringExtra("key_heading")
         val authorN = intent.getStringExtra("key_author")
         val imageN = intent.getStringExtra("key_image")
         val contentN = intent.getStringExtra("key_content")
         val datetimeN = intent.getStringExtra("key_date")
 
 
-        Log.d("DDD", "Date: $datetimeN")
+        Log.d("HHH", "Title0: $titleN")
+
+//        Log.d("HHHH", "Author0: $titleNew")
 
 
-
-        userTitle2 = findViewById(R.id.tvName2);
-        imageTest = findViewById(R.id.imageView);
-        title = findViewById(R.id.textView4)
-        tvdateTime = findViewById(R.id.textView5)
-        description2 = findViewById(R.id.textView6)
-        content = findViewById(R.id.textView7)
+        author = findViewById(R.id.tvAuthor);
+        imgViews = findViewById(R.id.imageView);
+        tvdateTime = findViewById(R.id.tvDate)
+        heading = findViewById(R.id.txtHeading)
+        content = findViewById(R.id.tvContent)
         test = findViewById(R.id.button2)
+        edit = findViewById(R.id.btnUpdate)
 
-
-        title.text = titleN
         content.text = contentN
-        userTitle2.text = authorN
         tvdateTime.text = datetimeN
+        heading.text = headingN
+        author.text = authorN
 
 
         val sharedPref=this?.getPreferences(Context.MODE_PRIVATE)?:return
         val isLogin=sharedPref.getString("Email","1")
 
         var email =intent.getStringExtra("email")
+
+        edit.setOnClickListener {
+            var intent = Intent(this, EditItemActivity::class.java)
+            intent.putExtra("key_title", titleN)
+            Log.d("HHH", "Title1: $titleN")
+            intent.putExtra("key_image", imageN)
+            intent.putExtra("key_author", authorN)
+
+            Log.d("HHHH", "Author1: $authorN")
+            startActivity(intent)
+        }
 
         test.setOnClickListener {
 
@@ -98,12 +117,16 @@ class TestActivity : AppCompatActivity() {
 
             finish();
 
+
+
         }
 
         Glide.with(this).load(imageN).
-        override(800, 800).into(imageTest)
+        override(800, 800).into(imgViews)
 
-        setText2(email)
+//        setText2(email)
+        author.text = "By " + HomeActivity.authorName
+
 
     }
 
@@ -113,20 +136,18 @@ class TestActivity : AppCompatActivity() {
         databaseReference.child(itemNew.title).setValue(itemNew);
     }
 
-    private fun setText2(email:String?)
+    private fun setText(email:String?)
     {
         db= FirebaseFirestore.getInstance()
         if (email != null) {
             db.collection("USERS").document(email).get()
                 .addOnSuccessListener {
                         tasks->
-                    userTitle2.text= "By "+ tasks.get("Name").toString()
+                    author.text= "By "+ tasks.get("Name").toString()
+                    authorName = tasks.get("Name").toString()
+
 
                 }
         }
     }
-
-
-
-
 }

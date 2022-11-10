@@ -47,9 +47,9 @@ class NewAdapter(private val dataSet: ArrayList<ItemNew> , val context: Context)
         val itemNew = dataSet[position]
         val imgItemData = itemNew.image
         val textItemData = itemNew.title
-        val textAuthorData = itemNew.author
-        val textContextData = itemNew.content
-        val dateTimeI = itemNew.dateTimes
+//        val textAuthorData = itemNew.author
+//        val textContextData = itemNew.content
+//        val dateTimeI = itemNew.dateTimes
 
 
         // sets the image to the imageview from our itemHolder class
@@ -63,11 +63,12 @@ class NewAdapter(private val dataSet: ArrayList<ItemNew> , val context: Context)
         viewHolder.imgNew.setOnClickListener(View.OnClickListener { view ->
             Log.d("AAAA", "ssss")
 
-            val intent = Intent(view.context, TestActivity::class.java)
+            val intent = Intent(view.context, DetailNews::class.java)
             val bundle = Bundle()
 
             val title: String = itemNew.title
             val content: String = itemNew.content
+            val heading: String = itemNew.heading
             val image: String = itemNew.image
             val author: String = itemNew.author
             val dateTime: String = itemNew.dateTimes
@@ -79,10 +80,11 @@ class NewAdapter(private val dataSet: ArrayList<ItemNew> , val context: Context)
             bundle.putString("key_content", content)
             bundle.putString("key_image", image)
             bundle.putString("key_author", author)
+            bundle.putString("key_heading", heading)
             bundle.putString("key_date", dateTime)
 
 
-
+            Log.i("aaa", "list: " + itemNew)
 
             intent.putExtras(bundle)
                 view.context.startActivity(intent)

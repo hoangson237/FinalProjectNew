@@ -9,10 +9,14 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileInputStream
 import java.text.SimpleDateFormat
@@ -23,15 +27,18 @@ class AddItemActivity : AppCompatActivity() {
 
     private val SELECT_PICTURE = 100
 
-
     lateinit var spinner: Spinner
     lateinit var title: EditText
-    lateinit var author: EditText
+    lateinit var author: TextView
     lateinit var contents: EditText
-    lateinit var btnSave: Button
-    lateinit var btnSelectImage: Button
-    lateinit var userTitle23: TextView
-    lateinit var imageTest: ImageView
+    lateinit var btSave: Button
+    lateinit var btnImg: Button
+    lateinit var headingN: EditText
+
+    var urlDownloadImage = ""
+    companion object {
+        var authorName = ""
+    }
 
     private lateinit var db: FirebaseFirestore
 
@@ -43,13 +50,13 @@ class AddItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_item)
 
-        title = findViewById(R.id.editTextTextPersonName)
-        author= findViewById(R.id.editTextTextPersonName2)
-        contents = findViewById(R.id.editTextTextPersonName3)
-        btnSave = findViewById(R.id.button)
+        title = findViewById(R.id.edtTitle)
+        author= findViewById(R.id.txtAuthor)
+        contents = findViewById(R.id.edtContent)
+        btSave = findViewById(R.id.btnSave)
         spinner = findViewById(R.id.spinner)
-        userTitle23 = findViewById(R.id.tvName22)
-        btnSelectImage = findViewById(R.id.button5);
+        headingN = findViewById(R.id.edtHeading)
+        btnImg = findViewById(R.id.btnSelectImage);
 
         askPermissions()
 
@@ -66,16 +73,17 @@ class AddItemActivity : AppCompatActivity() {
 //        val item1 = ItemNew("https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80\n",
 //            title.text.toString(),  author.text.toString(),  contents.text.toString())
 
-        btnSave.setOnClickListener {
-
-
+        btSave.setOnClickListener {
 
             val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
             val currentDate = sdf.format(Date())
             Log.d("ZZZ", "Title: $currentDate")
 
-            val item1 = ItemNew("https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80\n",
-                title.text.toString(),  userTitle23.text.toString(),  contents.text.toString(), currentDate.toString())
+            Log.d("ZZZ", "IMG: $urlDownloadImage")
+
+            val item1 = ItemNew( urlDownloadImage,
+                title.text.toString(), headingN.text.toString(), HomeActivity.authorName, contents.text.toString(), currentDate.toString())
+
 
 
             saveNews(item1)
@@ -83,21 +91,23 @@ class AddItemActivity : AppCompatActivity() {
             val mIntent = Intent(this, HomeActivity::class.java)
             startActivity(mIntent)
 
-            // /storage/emulated/0/DCIM/Camera/20220219_231146.jpg
+//             /storage/emulated/0/DCIM/Camera/20220219_231146.jpg
 
 //            selectImage()
+            finish()
 
         }
 
-        btnSelectImage.setOnClickListener {
+        btnImg.setOnClickListener {
             selectImage()
 
         }
 
+        author.text = "By " + HomeActivity.authorName
+//        setText23(email)
 
-        setText23(email)
 
-
+0
     }
 
     fun selectImage() {
@@ -112,33 +122,58 @@ class AddItemActivity : AppCompatActivity() {
         databaseReference.child(itemNew.title).setValue(itemNew);
     }
 
-    private fun setText23(email:String?)
+    private fun setText(email:String?)
     {
         db= FirebaseFirestore.getInstance()
         if (email != null) {
             db.collection("USERS").document(email).get()
                 .addOnSuccessListener {
                         tasks->
-                    userTitle23.text= "By "+ tasks.get("Name").toString()
+                    author.text= "By "+ tasks.get("Name").toString()
+                    authorName = tasks.get("Name").toString()
 
                 }
         }
     }
 
-    fun uploadImage(urlString: String) {
+    fun getUrlDownload(fileName: String) {
+        Log.i("ZZZ" ,"getUrlDownload")
+        val storageRef = FirebaseStorage.getInstance().reference
+        Log.d("ZZZ","file name: "+fileName)
+        val dateRef = storageRef.child(fileName)
+        dateRef.downloadUrl.addOnSuccessListener {
+
+            // Enable Nut Save
+
+            // Enable Nut Save
+
+
+            urlDownloadImage = "https://firebasestorage.googleapis.com"+it.path+"?alt=media&token=999e0c1f-8012-4de4-ab92-d63a7de1498e"
+            Log.d("ZZZ","https://firebasestorage.googleapis.com"+it.path+"?alt=media&token=999e0c1f-8012-4de4-ab92-d63a7de1498e")
+        }
+
+    }
+
+    fun uploadImage(urlString: String, imageName: String) {
 
         val storage = Firebase.storage
 
         val storageRef = storage.reference
 
-        val mountainsRef = storageRef.child("img.jpg")
+        val mountainsRef = storageRef.child(imageName)
 
         val stream = FileInputStream(File(urlString))
         var uploadTask = mountainsRef.putStream(stream)
         uploadTask.addOnFailureListener {
             Log.i("CCC" ,"that bai: "+it.message)
         }.addOnSuccessListener { taskSnapshot ->
-            Log.i("CCC" ,"thanh cong")
+            Log.i("ZZZ" ,"thanh cong")
+
+
+            getUrlDownload(imageName)
+
+
+
         }
 
     }
@@ -170,6 +205,10 @@ class AddItemActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // Disable nut Save
+
+        // Disable nut Save
+
         // code nay de lay image
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
@@ -183,8 +222,10 @@ class AddItemActivity : AppCompatActivity() {
                     // Set the image in ImageView
 //                    image.setImageURI(selectedImageUri)
                     Log.i("AAAA", "IMG.path: " + path.toString())
+                    val pathCut = path.toString().split('/')
+                    val imageName = pathCut.last()
                     Log.i("AAAA", "IMG: " + selectedImageUri)
-                    uploadImage(path.toString())
+                    uploadImage(path.toString(),imageName)
                 }
             }
         }

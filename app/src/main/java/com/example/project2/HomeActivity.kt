@@ -1,30 +1,33 @@
 package com.example.project2
 
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
+import android.view.Menu
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
 class HomeActivity : AppCompatActivity() {
 
+
     lateinit var userTitle: TextView
     private lateinit var db: FirebaseFirestore
-    lateinit var testImage: ImageView
+    private var searchView: SearchView? = null
     lateinit var recyclerView: RecyclerView
+
+    companion object {
+        var authorName = ""
+    }
 
     var Manager: LinearLayoutManager? = null
     var adapter: NewAdapter? = null
@@ -44,8 +47,14 @@ class HomeActivity : AppCompatActivity() {
         userTitle = findViewById(R.id.tvName);
         recyclerView = findViewById(R.id.recyclerview)
 
+
         var email =intent.getStringExtra("email")
         setText(email)
+    }
+
+    fun onFabClick(view: View){
+        val intent = Intent(this@HomeActivity, AddItemActivity::class.java)
+        startActivity(intent)
     }
 
     //lay gia tri tu firebase
@@ -53,21 +62,25 @@ class HomeActivity : AppCompatActivity() {
     {
         db= FirebaseFirestore.getInstance()
         if (email != null) {
+            Log.d("iii", "email: " + email)
             db.collection("USERS").document(email).get()
                 .addOnSuccessListener {
                         tasks->
-                    userTitle.text= "Xin chao "+ tasks.get("Name").toString()
+                    Log.d("iii", "email2: " + email)
+                    userTitle.text= "Xin chao " + tasks.get("Name").toString()
+                    authorName = tasks.get("Name").toString()
+
+                    Log.d("iiiI", "email: " + tasks.get("Name").toString())
 
                 }
         }
     }
-
     override fun onResume() {
         super.onResume()
 
+        userTitle.text= "Xin chao $authorName"
         val sharedPref=this?.getPreferences(Context.MODE_PRIVATE)?:return
         val isLogin=sharedPref.getString("Email","1")
-
 
         val arrayList = ArrayList<ItemNew>()//Creating an empty arraylist
         databaseReference.get().addOnSuccessListener {
@@ -77,6 +90,7 @@ class HomeActivity : AppCompatActivity() {
             for (item in listItem){
 
                 val content = item.child("content").value
+                val heading = item.child("heading").value
                 val author = item.child("author").value
                 val title = item.child("title").value
                 val image = item.child("image").value
@@ -84,24 +98,52 @@ class HomeActivity : AppCompatActivity() {
 
 
 
-                val itemNew = ItemNew(image.toString(), title.toString(), author.toString(), content.toString(), dateT.toString())
+                val itemNew = ItemNew(image.toString(), title.toString(), heading.toString(), author.toString(), content.toString(), dateT.toString())
                 arrayList.add(itemNew)
 
-                Log.i("XXX","it.children: "+itemNew.content)
-                Log.i("XXX","it.children: "+itemNew.image)
-                Log.i("XXX","it.children: "+itemNew.author)
-                Log.i("XXX","it.children: "+itemNew.title)
+//                Log.i("XXX","it.children: "+itemNew.content)
+//                Log.i("XXX","it.children: "+itemNew.image)
+                Log.i("XXX","it.children: "+ author)
 
-                Manager = LinearLayoutManager(this)
-                recyclerView!!.layoutManager = Manager
-                adapter = NewAdapter(arrayList,this)
-                recyclerView!!.adapter = adapter
 
             }
+
+            Manager = LinearLayoutManager(this)
+            recyclerView!!.layoutManager = Manager
+            adapter = NewAdapter(arrayList,this)
+            recyclerView!!.adapter = adapter
+
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
-
-
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView!!.maxWidth = Int.MAX_VALUE
+        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+//                adapter.getFilter().filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+//                adapter.getFilter().filter(newText)
+                return false
+            }
+        })
+        return true
+    }
+
+    override fun onBackPressed() {
+        if (!searchView?.isIconified()!!) {
+            searchView?.setIconified(true)
+            return
+        }
+        super.onBackPressed()
+    }
+
 }

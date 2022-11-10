@@ -3,20 +3,19 @@ package com.example.project2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.text.method.HideReturnsTransformationMethod
+import android.widget.*
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     lateinit var login: Button
-    lateinit var email: TextView
-    lateinit var password: EditText
+    lateinit var email: TextInputEditText
+    lateinit var password: TextInputEditText
 
-    lateinit var test: Button
-    lateinit var test2: Button
+//    lateinit var test: Button
+//    lateinit var test2: Button
     // test 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,30 +25,31 @@ class MainActivity : AppCompatActivity() {
         login = findViewById(R.id.Login)
         email = findViewById(R.id.Email)
         password = findViewById(R.id.Password)
-        test = findViewById(R.id.button4);
-        test2 = findViewById(R.id.button3);
+//        test = findViewById(R.id.button4);
+//        test2 = findViewById(R.id.button3);
         auth = FirebaseAuth.getInstance()
 
 
-        test.setOnClickListener {
-            if (checking()) {
-                val email = email.text.toString()
-                val password = password.text.toString()
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            var intent = Intent(this, TestActivity::class.java)
-                            intent.putExtra("email", email)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(this, "Wrong Details", Toast.LENGTH_LONG).show()
-                        }
-                    }
-            } else {
-                Toast.makeText(this, "Enter the Details", Toast.LENGTH_LONG).show()
-            }
-        }
+
+//        test.setOnClickListener {
+//            if (checking()) {
+//                val email = email.text.toString()
+//                val password = password.text.toString()
+//                auth.signInWithEmailAndPassword(email, password)
+//                    .addOnCompleteListener(this) { task ->
+//                        if (task.isSuccessful) {
+//                            var intent = Intent(this, TestActivity::class.java)
+//                            intent.putExtra("email", email)
+//                            startActivity(intent)
+//                            finish()
+//                        } else {
+//                            Toast.makeText(this, "Wrong Details", Toast.LENGTH_LONG).show()
+//                        }
+//                    }
+//            } else {
+//                Toast.makeText(this, "Enter the Details", Toast.LENGTH_LONG).show()
+//            }
+//        }
 
         val register: Button = findViewById(R.id.Register)
         register.setOnClickListener {
@@ -78,25 +78,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        test2.setOnClickListener {
-            if (checking()) {
-                val email = email.text.toString()
-                val password = password.text.toString()
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            var intent = Intent(this, AddItemActivity::class.java)
-                            intent.putExtra("email", email)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(this, "Wrong Details", Toast.LENGTH_LONG).show()
-                        }
-                    }
-            } else {
-                Toast.makeText(this, "Enter the Details", Toast.LENGTH_LONG).show()
-            }
-        }
+//        test2.setOnClickListener {
+//            if (checking()) {
+//                val email = email.text.toString()
+//                val password = password.text.toString()
+//                auth.signInWithEmailAndPassword(email, password)
+//                    .addOnCompleteListener(this) { task ->
+//                        if (task.isSuccessful) {
+//                            var intent = Intent(this, AddItemActivity::class.java)
+//                            intent.putExtra("email", email)
+//                            startActivity(intent)
+//                            finish()
+//                        } else {
+//                            Toast.makeText(this, "Wrong Details", Toast.LENGTH_LONG).show()
+//                        }
+//                    }
+//            } else {
+//                Toast.makeText(this, "Enter the Details", Toast.LENGTH_LONG).show()
+//            }
+//        }
 
     }
 
@@ -109,4 +109,5 @@ class MainActivity : AppCompatActivity() {
         }
         return false
     }
+
 }
