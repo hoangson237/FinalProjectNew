@@ -31,13 +31,13 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/bookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="270dp"
-            android:layout_marginTop="-30dp"
-            android:drawableLeft="@drawable/ic_baseline_bookmark_border_24" />
+<!--        <TextView-->
+<!--            android:id="@+id/bookmark"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="270dp"-->
+<!--            android:layout_marginTop="-30dp"-->
+<!--            android:drawableLeft="@drawable/ic_baseline_bookmark_border_24" />-->
 
         <TextView
             android:id="@+id/test"
@@ -47,29 +47,6 @@
             android:textColor="@color/black" />
 
     </LinearLayout>
-
-    <!--    <ImageView-->
-<!--        android:id="@+id/imgNew"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="150dp"-->
-<!--        android:layout_marginTop="52dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.497"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:srcCompat="@tools:sample/backgrounds/scenic" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/tvTitle"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:text="The Thao"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textSize="20sp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imgNew" />-->
 
 
 
