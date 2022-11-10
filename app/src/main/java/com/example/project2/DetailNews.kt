@@ -62,7 +62,7 @@ class DetailNews : AppCompatActivity() {
         content = findViewById(R.id.tvContent)
         test = findViewById(R.id.button2)
         edit = findViewById(R.id.btnUpdate)
-
+        //
         content.text = contentN
         tvdateTime.text = datetimeN
         heading.text = headingN
