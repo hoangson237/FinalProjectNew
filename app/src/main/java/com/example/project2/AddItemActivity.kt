@@ -100,7 +100,6 @@ class AddItemActivity : AppCompatActivity() {
 
         btnImg.setOnClickListener {
             selectImage()
-
         }
 
         author.text = "By " + HomeActivity.authorName
