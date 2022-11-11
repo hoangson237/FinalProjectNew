@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.logging.Logger
 
 class HomeActivity : AppCompatActivity() {
 
@@ -24,6 +25,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private var searchView: SearchView? = null
     lateinit var recyclerView: RecyclerView
+    var listNewItem = ArrayList<ItemNew>()
 
     companion object {
         var authorName = ""
@@ -82,7 +84,7 @@ class HomeActivity : AppCompatActivity() {
         val sharedPref=this?.getPreferences(Context.MODE_PRIVATE)?:return
         val isLogin=sharedPref.getString("Email","1")
 
-        val arrayList = ArrayList<ItemNew>()//Creating an empty arraylist
+//        val arrayList = ArrayList<ItemNew>()//Creating an empty arraylist
         databaseReference.get().addOnSuccessListener {
 
             val listItem = it.children
@@ -99,7 +101,9 @@ class HomeActivity : AppCompatActivity() {
 
 
                 val itemNew = ItemNew(image.toString(), title.toString(), heading.toString(), author.toString(), content.toString(), dateT.toString())
-                arrayList.add(itemNew)
+                Log.d("DDD","itemNew.title: "+itemNew.title)
+                Log.d("DDD","itemNew.content: "+itemNew.content)
+                listNewItem.add(itemNew)
 
 //                Log.i("XXX","it.children: "+itemNew.content)
 //                Log.i("XXX","it.children: "+itemNew.image)
@@ -109,9 +113,9 @@ class HomeActivity : AppCompatActivity() {
             }
 
             Manager = LinearLayoutManager(this)
-            recyclerView!!.layoutManager = Manager
-            adapter = NewAdapter(arrayList,this)
-            recyclerView!!.adapter = adapter
+            recyclerView.layoutManager = Manager
+            adapter = NewAdapter(listNewItem,this)
+            recyclerView.adapter = adapter
 
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
@@ -132,6 +136,14 @@ class HomeActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String): Boolean {
 //                adapter.getFilter().filter(newText)
+                Log.d("SSS","newText: "+newText)
+                val searchList = listNewItem.filter {
+                        item -> item.title.contains(newText)
+                }
+                Log.d("SSS","listNewItem Size: "+listNewItem.size)
+                adapter = NewAdapter(searchList as ArrayList<ItemNew>,this@HomeActivity)
+                recyclerView.adapter = adapter
+
                 return false
             }
         })
