@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -67,6 +68,14 @@ class DetailNews : AppCompatActivity() {
         tvdateTime.text = datetimeN
         heading.text = headingN
         author.text = authorN
+
+        if (MainActivity.isAdminAccount){
+            edit.visibility = View.VISIBLE
+            test.visibility = View.VISIBLE
+        } else {
+            edit.visibility = View.GONE
+            test.visibility = View.GONE
+        }
 
 
         val sharedPref=this?.getPreferences(Context.MODE_PRIVATE)?:return
