@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
+import android.util.Log
 import android.widget.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -13,6 +14,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var login: Button
     lateinit var email: TextInputEditText
     lateinit var password: TextInputEditText
+
+    companion object {
+        var isAdminAccount = false
+    }
 
 //    lateinit var test: Button
 //    lateinit var test2: Button
@@ -65,6 +70,11 @@ class MainActivity : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+
+                            Log.d("DDD","task.result.user?.email: "+task.result.user?.email)
+                            if (task.result.user?.email == "admin@gmail.com"){
+                                isAdminAccount = true
+                            }
                             var intent = Intent(this, HomeActivity::class.java)
                             intent.putExtra("email", email)
                             startActivity(intent)

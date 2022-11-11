@@ -22,6 +22,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     lateinit var userTitle: TextView
+    lateinit var fabButton: FloatingActionButton
     private lateinit var db: FirebaseFirestore
     private var searchView: SearchView? = null
     lateinit var recyclerView: RecyclerView
@@ -48,10 +49,17 @@ class HomeActivity : AppCompatActivity() {
 
         userTitle = findViewById(R.id.tvName);
         recyclerView = findViewById(R.id.recyclerview)
+        fabButton = findViewById(R.id.fab)
 
 
         var email =intent.getStringExtra("email")
         setText(email)
+
+        if (MainActivity.isAdminAccount){
+            fabButton.visibility = View.VISIBLE
+        } else {
+            fabButton.visibility = View.GONE
+        }
     }
 
     fun onFabClick(view: View){
@@ -79,6 +87,7 @@ class HomeActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
+        listNewItem.clear()
 
         userTitle.text= "Xin chao $authorName"
         val sharedPref=this?.getPreferences(Context.MODE_PRIVATE)?:return
