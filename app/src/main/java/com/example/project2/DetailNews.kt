@@ -134,7 +134,7 @@ class DetailNews : AppCompatActivity() {
 
         mBookMarkBtn.setOnClickListener {
             val titleN = intent.getStringExtra("key_title")
-            bookMarkItem(titleN.toString(),true)
+            bookMarkItem(titleN.toString(),false)
         }
 
         Glide.with(this).load(imageN).
@@ -142,15 +142,15 @@ class DetailNews : AppCompatActivity() {
 
 //        setText2(email)
         author.text = "By " + HomeActivity.authorName
+        Log.d("ZZZ", "isBookMark: $isBookMark")
 
-        if (isBookMark == "true"){
-
-        }
+        mBookMarkBtn.isChecked = isBookMark == "true"
 
     }
 
     fun bookMarkItem(title: String, isBookMark: Boolean) {
-        databaseReference.child(title).setValue(isBookMark);
+        Log.d("ZZZ", "isBookMark: $isBookMark")
+        databaseReference.child(title).child("isBookMark").setValue(isBookMark);
     }
 
     fun saveNews(itemNew: ItemNew){
