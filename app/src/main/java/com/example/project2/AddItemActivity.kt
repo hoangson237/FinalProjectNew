@@ -9,14 +9,11 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileInputStream
 import java.text.SimpleDateFormat
@@ -34,6 +31,7 @@ class AddItemActivity : AppCompatActivity() {
     lateinit var btSave: Button
     lateinit var btnImg: Button
     lateinit var headingN: EditText
+    lateinit var bookMark: Switch
 
     var urlDownloadImage = ""
     companion object {
@@ -54,9 +52,9 @@ class AddItemActivity : AppCompatActivity() {
         author= findViewById(R.id.txtAuthor)
         contents = findViewById(R.id.edtContent)
         btSave = findViewById(R.id.btnSave)
-        spinner = findViewById(R.id.spinner)
         headingN = findViewById(R.id.edtHeading)
-        btnImg = findViewById(R.id.btnSelectImage);
+        btnImg = findViewById(R.id.btnSelectImage)
+        bookMark = findViewById(R.id.switch_bookmark)
 
         askPermissions()
 
@@ -74,6 +72,9 @@ class AddItemActivity : AppCompatActivity() {
 //            title.text.toString(),  author.text.toString(),  contents.text.toString())
 
         btSave.setOnClickListener {
+            if (!validateTitle() or !validateHeading() or !validateContent()) {
+                return@setOnClickListener
+            }
 
             val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
             val currentDate = sdf.format(Date())
@@ -81,8 +82,18 @@ class AddItemActivity : AppCompatActivity() {
 
             Log.d("ZZZ", "IMG: $urlDownloadImage")
 
+
+            val bMark: Boolean = bookMark.isChecked()
+            var valueBookMark = ""
+
+            if (bMark) {
+                valueBookMark = "yes"
+            } else {
+                valueBookMark= "no"
+            }
+
             val item1 = ItemNew( urlDownloadImage,
-                title.text.toString(), headingN.text.toString(), HomeActivity.authorName, contents.text.toString(), currentDate.toString())
+                title.text.toString(), headingN.text.toString(), HomeActivity.authorName, contents.text.toString(), currentDate.toString(), valueBookMark == false.toString())
 
 
 
@@ -94,6 +105,7 @@ class AddItemActivity : AppCompatActivity() {
 //             /storage/emulated/0/DCIM/Camera/20220219_231146.jpg
 
 //            selectImage()
+
             finish()
 
         }
@@ -107,7 +119,13 @@ class AddItemActivity : AppCompatActivity() {
 //        setText23(email)
 
 
-0
+        bookMark.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked == true) {
+                Toast.makeText(baseContext, "Yes", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(baseContext, "No", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     fun selectImage() {
@@ -228,6 +246,39 @@ class AddItemActivity : AppCompatActivity() {
                     uploadImage(path.toString(),imageName)
                 }
             }
+        }
+    }
+
+    private fun validateTitle(): Boolean {
+        val vTitle: String = title.getText().toString().trim { it <= ' ' }
+        return if (vTitle.isEmpty()) {
+            title.setError("Title can't be empty")
+            false
+        } else {
+            title.setError(null)
+            true
+        }
+    }
+
+    private fun validateHeading(): Boolean {
+        val vHeading: String = headingN.getText().toString().trim { it <= ' ' }
+        return if (vHeading.isEmpty()) {
+            headingN.setError("Heading can't be empty")
+            false
+        } else {
+            headingN.setError(null)
+            true
+        }
+    }
+
+    private fun validateContent(): Boolean {
+        val vContent: String = contents.getText().toString().trim { it <= ' ' }
+        return if (vContent.isEmpty()) {
+            contents.setError("Content can't be empty")
+            false
+        } else {
+            contents.setError(null)
+            true
         }
     }
 }

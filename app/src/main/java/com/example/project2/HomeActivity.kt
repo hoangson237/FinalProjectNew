@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -16,13 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.logging.Logger
 
 class HomeActivity : AppCompatActivity() {
 
 
     lateinit var userTitle: TextView
     lateinit var fabButton: FloatingActionButton
+    lateinit var edtDefault: TextView
     private lateinit var db: FirebaseFirestore
     private var searchView: SearchView? = null
     lateinit var recyclerView: RecyclerView
@@ -50,6 +49,7 @@ class HomeActivity : AppCompatActivity() {
         userTitle = findViewById(R.id.tvName);
         recyclerView = findViewById(R.id.recyclerview)
         fabButton = findViewById(R.id.fab)
+        edtDefault = findViewById(R.id.txtVisibles)
 
 
         var email =intent.getStringExtra("email")
@@ -119,6 +119,12 @@ class HomeActivity : AppCompatActivity() {
                 Log.i("XXX","it.children: "+ author)
 
 
+            }
+
+            if (listNewItem.size == 0) {
+                edtDefault.setVisibility(View.VISIBLE)
+            } else {
+                edtDefault.setVisibility(View.GONE)
             }
 
             Manager = LinearLayoutManager(this)

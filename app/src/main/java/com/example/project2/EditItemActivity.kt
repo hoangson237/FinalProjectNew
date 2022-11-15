@@ -29,6 +29,8 @@ class EditItemActivity : AppCompatActivity() {
     lateinit var btSave: Button
     lateinit var btnSelectImage: Button
     lateinit var headingN: EditText
+    lateinit var bookMark: Switch
+
 
     companion object {
         var authorName = ""
@@ -59,7 +61,7 @@ class EditItemActivity : AppCompatActivity() {
         author= findViewById(R.id.txtAuthor)
         contents = findViewById(R.id.edtContent)
         btSave = findViewById(R.id.btnSave)
-        spinner = findViewById(R.id.spinner)
+        bookMark = findViewById(R.id.switch_bookmark)
         headingN = findViewById(R.id.edtHeading)
         btnSelectImage = findViewById(R.id.btnImg);
 
@@ -87,9 +89,20 @@ class EditItemActivity : AppCompatActivity() {
             Log.d("ZZZ", "Title: $currentDate")
 
 
+
+            val bMark: Boolean = bookMark.isChecked()
+            var valueBookMark = ""
+
+            if (bMark) {
+                valueBookMark = "yes"
+            } else {
+                valueBookMark= "no"
+            }
+
+
             val item1 = ItemNew(imageN.toString(),
                 titleN.toString(),
-                  HomeActivity.authorName, headingN.text.toString(), contents.text.toString(), currentDate.toString())
+                  HomeActivity.authorName, headingN.text.toString(), contents.text.toString(), currentDate.toString(), valueBookMark == false.toString())
             Log.d("TTT", "Title: $titleN")
             Log.d("TTT", "Anh: $imageN")
 
@@ -111,6 +124,15 @@ class EditItemActivity : AppCompatActivity() {
 
         author.text = "By " + HomeActivity.authorName
 //        setText23(email)
+
+
+        bookMark.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked == true) {
+                Toast.makeText(baseContext, "Yes", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(baseContext, "No", Toast.LENGTH_SHORT).show()
+            }
+        })
 
     }
 

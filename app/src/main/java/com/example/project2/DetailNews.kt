@@ -22,7 +22,7 @@ class DetailNews : AppCompatActivity() {
     lateinit var content: TextView
     lateinit var imgViews: ImageView
     private lateinit var db: FirebaseFirestore
-    lateinit var test: Button
+    lateinit var remove: Button
     lateinit var edit: Button
     var titleEdit = ""
     companion object {
@@ -51,6 +51,7 @@ class DetailNews : AppCompatActivity() {
         val datetimeN = intent.getStringExtra("key_date")
 
 
+
         Log.d("HHH", "Title0: $titleN")
 
 //        Log.d("HHHH", "Author0: $titleNew")
@@ -61,7 +62,7 @@ class DetailNews : AppCompatActivity() {
         tvdateTime = findViewById(R.id.tvDate)
         heading = findViewById(R.id.txtHeading)
         content = findViewById(R.id.tvContent)
-        test = findViewById(R.id.button2)
+        remove = findViewById(R.id.btnRemove)
         edit = findViewById(R.id.btnUpdate)
         //
         content.text = contentN
@@ -71,10 +72,10 @@ class DetailNews : AppCompatActivity() {
 
         if (MainActivity.isAdminAccount){
             edit.visibility = View.VISIBLE
-            test.visibility = View.VISIBLE
+            remove.visibility = View.VISIBLE
         } else {
             edit.visibility = View.GONE
-            test.visibility = View.GONE
+            remove.visibility = View.GONE
         }
 
 
@@ -94,7 +95,7 @@ class DetailNews : AppCompatActivity() {
             startActivity(intent)
         }
 
-        test.setOnClickListener {
+        remove.setOnClickListener {
 
 //            val item1 = ItemNew("https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80\n", "The thao 24744", "Hoang", "ABCDEEEE")
 //
