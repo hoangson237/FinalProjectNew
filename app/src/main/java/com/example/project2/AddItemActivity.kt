@@ -79,7 +79,7 @@ class AddItemActivity : AppCompatActivity() {
 
 
             val item1 = ItemNew( urlDownloadImage,
-                title.text.toString(), headingN.text.toString(), HomeActivity.authorName, contents.text.toString(), currentDate.toString())
+                title.text.toString(), headingN.text.toString(), HomeActivity.authorName, contents.text.toString(), currentDate.toString(), "false")
 
 
 

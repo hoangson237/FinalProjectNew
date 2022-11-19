@@ -113,10 +113,11 @@ class HomeActivity : AppCompatActivity() {
                 val title = item.child("title").value
                 val image = item.child("image").value
                 val dateT = item.child("dateTimes").value
+                val isBookMark = item.child("isBookMark").value
 
 
 
-                val itemNew = ItemNew(image.toString(), title.toString(), heading.toString(), author.toString(), content.toString(), dateT.toString())
+                val itemNew = ItemNew(image.toString(), title.toString(), heading.toString(), author.toString(), content.toString(), dateT.toString(), isBookMark.toString())
                 Log.d("DDD","itemNew.title: "+itemNew.title)
                 Log.d("DDD","itemNew.content: "+itemNew.content)
                 listNewItem.add(itemNew)

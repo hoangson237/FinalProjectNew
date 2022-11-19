@@ -72,7 +72,7 @@ class NewAdapter(private val dataSet: ArrayList<ItemNew> , val context: Context)
             val image: String = itemNew.image
             val author: String = itemNew.author
             val dateTime: String = itemNew.dateTimes
-            val isBookMark: Boolean = itemNew.isBookMark == false
+            val isBookMark: String? = itemNew.isBookMark
 
 
             Log.i("DDDD", "date: " + itemNew.dateTimes)
@@ -88,6 +88,7 @@ class NewAdapter(private val dataSet: ArrayList<ItemNew> , val context: Context)
 
 
             Log.i("aaa", "list: " + itemNew)
+            Log.i("ZZZ", "isBookMarkX: " + isBookMark)
 
             intent.putExtras(bundle)
                 view.context.startActivity(intent)
