@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SwitchCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,6 +29,7 @@ class DetailNews : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     lateinit var remove: Button
     lateinit var edit: Button
+    lateinit var mBookMarkBtn: SwitchCompat
     var titleEdit = ""
     companion object {
         var authorName = ""
@@ -53,6 +55,7 @@ class DetailNews : AppCompatActivity() {
         val imageN = intent.getStringExtra("key_image")
         val contentN = intent.getStringExtra("key_content")
         val datetimeN = intent.getStringExtra("key_date")
+        val isBookMark = intent.getStringExtra("key_book_mark")
 
 
 
@@ -68,6 +71,7 @@ class DetailNews : AppCompatActivity() {
         content = findViewById(R.id.tvContent)
         remove = findViewById(R.id.btnRemove)
         edit = findViewById(R.id.btnUpdate)
+        mBookMarkBtn = findViewById(R.id.bookMarkBtn)
         //
         content.text = contentN
         tvdateTime.text = datetimeN
@@ -131,8 +135,11 @@ class DetailNews : AppCompatActivity() {
 
             finish();
 
+        }
 
-
+        mBookMarkBtn.setOnClickListener {
+            val titleN = intent.getStringExtra("key_title")
+            bookMarkItem(titleN.toString(),false)
         }
 
         Glide.with(this).load(imageN).
@@ -140,14 +147,19 @@ class DetailNews : AppCompatActivity() {
 
 //        setText2(email)
         author.text = "By " + HomeActivity.authorName
+        Log.d("ZZZ", "isBookMark: $isBookMark")
 
+        mBookMarkBtn.isChecked = isBookMark == "true"
 
     }
 
+    fun bookMarkItem(title: String, isBookMark: Boolean) {
+        Log.d("ZZZ", "isBookMark: $isBookMark")
+        databaseReference.child(title).child("isBookMark").setValue(isBookMark);
+    }
+
     fun saveNews(itemNew: ItemNew){
-
-
-        databaseReference.child(itemNew.title).setValue(itemNew);
+        databaseReference.child(itemNew.title).child("isBookMark").setValue(true);
     }
 
     private fun setText(email:String?)
