@@ -13,4 +13,8 @@
         android:id="@+id/bookMarkFragment"
         android:title="BookMark"
         android:icon="@drawable/ic_baseline_bookmark_border_24"/>
+    <item
+        android:id="@+id/sortFragment"
+        android:title="Sort By Date"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"/>
 </menu>

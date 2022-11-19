@@ -3,19 +3,27 @@ package com.example.project2
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class HomeActivity : AppCompatActivity() {
 
@@ -27,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
     private var searchView: SearchView? = null
     lateinit var recyclerView: RecyclerView
     var listNewItem = ArrayList<ItemNew>()
+    var listItemDate = ArrayList<Long>()
 
     companion object {
         var authorName = ""
@@ -55,9 +64,6 @@ class HomeActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerview)
         fabButton = findViewById(R.id.fab)
         edtDefault = findViewById(R.id.txtVisibles)
-
-
-
 
         var email =intent.getStringExtra("email")
         setText(email)
@@ -92,6 +98,7 @@ class HomeActivity : AppCompatActivity() {
                 }
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
         listNewItem.clear()
@@ -125,6 +132,9 @@ class HomeActivity : AppCompatActivity() {
             } else {
                 edtDefault.setVisibility(View.GONE)
             }
+
+            // Hàm đảo ngược lại List
+            listNewItem.reverse()
 
             Manager = LinearLayoutManager(this)
             recyclerView.layoutManager = Manager
@@ -178,14 +188,19 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(intent)
 
             }
-            R.id.  bookMarkFragment -> {
+            R.id.bookMarkFragment -> {
                 val intent = Intent(this@HomeActivity, BookMarkActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.sortFragment-> {
+                val intent = Intent(this@HomeActivity, HomeActivity::class.java)
                 startActivity(intent)
             }
             else -> {}
         }
         return true
     }
+
 
     override fun onBackPressed() {
         if (!searchView?.isIconified()!!) {
