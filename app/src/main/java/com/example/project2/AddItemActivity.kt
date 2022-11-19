@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.FirebaseDatabase
@@ -24,14 +26,12 @@ class AddItemActivity : AppCompatActivity() {
 
     private val SELECT_PICTURE = 100
 
-    lateinit var spinner: Spinner
     lateinit var title: EditText
     lateinit var author: TextView
     lateinit var contents: EditText
     lateinit var btSave: Button
     lateinit var btnImg: Button
     lateinit var headingN: EditText
-    lateinit var bookMark: Switch
 
     var urlDownloadImage = ""
     companion object {
@@ -54,7 +54,6 @@ class AddItemActivity : AppCompatActivity() {
         btSave = findViewById(R.id.btnSave)
         headingN = findViewById(R.id.edtHeading)
         btnImg = findViewById(R.id.btnSelectImage)
-        bookMark = findViewById(R.id.switch_bookmark)
 
         askPermissions()
 
@@ -63,10 +62,6 @@ class AddItemActivity : AppCompatActivity() {
 
         var email =intent.getStringExtra("email")
 
-
-
-        val spinners = arrayOf("The Thao", "Xa Hoi", "Kinh Te")
-        spinner.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, spinners)
 
 //        val item1 = ItemNew("https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80\n",
 //            title.text.toString(),  author.text.toString(),  contents.text.toString())
@@ -83,17 +78,8 @@ class AddItemActivity : AppCompatActivity() {
             Log.d("ZZZ", "IMG: $urlDownloadImage")
 
 
-            val bMark: Boolean = bookMark.isChecked()
-            var valueBookMark = ""
-
-            if (bMark) {
-                valueBookMark = "yes"
-            } else {
-                valueBookMark= "no"
-            }
-
             val item1 = ItemNew( urlDownloadImage,
-                title.text.toString(), headingN.text.toString(), HomeActivity.authorName, contents.text.toString(), currentDate.toString(), valueBookMark == false.toString())
+                title.text.toString(), headingN.text.toString(), HomeActivity.authorName, contents.text.toString(), currentDate.toString())
 
 
 
@@ -118,14 +104,6 @@ class AddItemActivity : AppCompatActivity() {
         author.text = "By " + HomeActivity.authorName
 //        setText23(email)
 
-
-        bookMark.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked == true) {
-                Toast.makeText(baseContext, "Yes", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(baseContext, "No", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     fun selectImage() {
@@ -280,6 +258,28 @@ class AddItemActivity : AppCompatActivity() {
             contents.setError(null)
             true
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.bottom_nav, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.homeFragment -> {
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.settingsFragment -> {
+                val intent = Intent(this, Settings::class.java)
+                startActivity(intent)
+
+            }
+            else -> {}
+        }
+        return true
     }
 }
 

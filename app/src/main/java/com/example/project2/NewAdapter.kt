@@ -72,7 +72,7 @@ class NewAdapter(private val dataSet: ArrayList<ItemNew> , val context: Context)
             val image: String = itemNew.image
             val author: String = itemNew.author
             val dateTime: String = itemNew.dateTimes
-            val isBookMark: Boolean = itemNew.isBookMark == false
+
 
             Log.i("DDDD", "date: " + itemNew.dateTimes)
 
@@ -83,7 +83,6 @@ class NewAdapter(private val dataSet: ArrayList<ItemNew> , val context: Context)
             bundle.putString("key_author", author)
             bundle.putString("key_heading", heading)
             bundle.putString("key_date", dateTime)
-            bundle.putString("key_isBookMark", isBookMark.toString())
 
 
             Log.i("aaa", "list: " + itemNew)

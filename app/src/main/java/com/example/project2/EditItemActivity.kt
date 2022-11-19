@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.FirebaseDatabase
@@ -23,13 +25,12 @@ class EditItemActivity : AppCompatActivity() {
 
     private val SELECT_PICTURE = 100
 
-    lateinit var spinner: Spinner
+
     lateinit var author: TextView
     lateinit var contents: EditText
     lateinit var btSave: Button
     lateinit var btnSelectImage: Button
     lateinit var headingN: EditText
-    lateinit var bookMark: Switch
 
 
     companion object {
@@ -61,7 +62,6 @@ class EditItemActivity : AppCompatActivity() {
         author= findViewById(R.id.txtAuthor)
         contents = findViewById(R.id.edtContent)
         btSave = findViewById(R.id.btnSave)
-        bookMark = findViewById(R.id.switch_bookmark)
         headingN = findViewById(R.id.edtHeading)
         btnSelectImage = findViewById(R.id.btnImg);
 
@@ -75,14 +75,13 @@ class EditItemActivity : AppCompatActivity() {
 
 
 
-        val spinners = arrayOf("The Thao", "Xa Hoi", "Kinh Te")
-        spinner.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, spinners)
-
 //        val item1 = ItemNew("https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80\n",
 //            title.text.toString(),  author.text.toString(),  contents.text.toString())
 
         btSave.setOnClickListener {
-
+            if (!validateHeading() or !validateContent()) {
+                return@setOnClickListener
+            }
 
             val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
             val currentDate = sdf.format(Date())
@@ -90,19 +89,11 @@ class EditItemActivity : AppCompatActivity() {
 
 
 
-            val bMark: Boolean = bookMark.isChecked()
-            var valueBookMark = ""
-
-            if (bMark) {
-                valueBookMark = "yes"
-            } else {
-                valueBookMark= "no"
-            }
 
 
             val item1 = ItemNew(imageN.toString(),
-                titleN.toString(),
-                  HomeActivity.authorName, headingN.text.toString(), contents.text.toString(), currentDate.toString(), valueBookMark == false.toString())
+                titleN.toString(), headingN.text.toString(),
+                  HomeActivity.authorName, contents.text.toString(), currentDate.toString())
             Log.d("TTT", "Title: $titleN")
             Log.d("TTT", "Anh: $imageN")
 
@@ -125,14 +116,6 @@ class EditItemActivity : AppCompatActivity() {
         author.text = "By " + HomeActivity.authorName
 //        setText23(email)
 
-
-        bookMark.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked == true) {
-                Toast.makeText(baseContext, "Yes", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(baseContext, "No", Toast.LENGTH_SHORT).show()
-            }
-        })
 
     }
 
@@ -160,6 +143,28 @@ class EditItemActivity : AppCompatActivity() {
                     authorName = tasks.get("Name").toString()
 
                 }
+        }
+    }
+
+    private fun validateHeading(): Boolean {
+        val vHeading: String = headingN.getText().toString().trim { it <= ' ' }
+        return if (vHeading.isEmpty()) {
+            headingN.setError("Heading can't be empty")
+            false
+        } else {
+            headingN.setError(null)
+            true
+        }
+    }
+
+    private fun validateContent(): Boolean {
+        val vContent: String = contents.getText().toString().trim { it <= ' ' }
+        return if (vContent.isEmpty()) {
+            contents.setError("Content can't be empty")
+            false
+        } else {
+            contents.setError(null)
+            true
         }
     }
 
@@ -227,6 +232,28 @@ class EditItemActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.bottom_nav, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.homeFragment -> {
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.settingsFragment -> {
+                val intent = Intent(this, Settings::class.java)
+                startActivity(intent)
+
+            }
+            else -> {}
+        }
+        return true
+    }
 }
 
 

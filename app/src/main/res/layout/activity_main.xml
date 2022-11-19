@@ -99,7 +99,7 @@
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
             android:drawablePadding="7dp"
-            android:text="nh@gmail.com"
+            android:text="admin@gmail.com"
             android:drawableLeft="@android:drawable/ic_lock_idle_lock"
             android:ems="15"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -115,18 +115,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/sign_in_btn"
-        android:layout_width="370dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/border2"
-        android:drawableLeft="@drawable/ic_icons8_google_24"
-        android:gravity="center"
-        android:text="Sign up with Google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_fb_btn" />
+<!--    <TextView-->
+<!--        android:id="@+id/sign_in_btn"-->
+<!--        android:layout_width="370dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:background="@drawable/border2"-->
+<!--        android:drawableLeft="@drawable/ic_icons8_google_24"-->
+<!--        android:gravity="center"-->
+<!--        android:text="Sign up with Google"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.609"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/login_fb_btn" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

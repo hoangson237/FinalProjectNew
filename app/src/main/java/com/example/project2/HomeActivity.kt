@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -46,10 +47,16 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+//        val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+//        val navController = findNavController(R.id.fragmentContainerView)
+//        bottomNavigation.setupWithNavController(navController)
+
         userTitle = findViewById(R.id.tvName);
         recyclerView = findViewById(R.id.recyclerview)
         fabButton = findViewById(R.id.fab)
         edtDefault = findViewById(R.id.txtVisibles)
+
+
 
 
         var email =intent.getStringExtra("email")
@@ -139,6 +146,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
+        menuInflater.inflate(R.menu.bottom_nav, menu)
         val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
         searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -162,6 +170,23 @@ class HomeActivity : AppCompatActivity() {
                 return false
             }
         })
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.homeFragment -> {
+                val intent = Intent(this@HomeActivity, HomeActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.settingsFragment -> {
+                val intent = Intent(this@HomeActivity, Settings::class.java)
+                startActivity(intent)
+
+            }
+            else -> {}
+        }
         return true
     }
 
