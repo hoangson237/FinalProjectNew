@@ -100,7 +100,7 @@ Anh Đức là nhân tố quan trọng của Việt Nam trên hành trình vô �
         android:id="@+id/btnUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
+        android:layout_marginStart="72dp"
         android:layout_marginTop="12dp"
         android:text="Update"
         app:layout_constraintStart_toStartOf="parent"

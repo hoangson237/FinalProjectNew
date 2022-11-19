@@ -115,17 +115,8 @@ class HomeActivity : AppCompatActivity() {
                 val dateT = item.child("dateTimes").value
                 val isBookMark = item.child("isBookMark").value
 
-
-
                 val itemNew = ItemNew(image.toString(), title.toString(), heading.toString(), author.toString(), content.toString(), dateT.toString(), isBookMark.toString())
-                Log.d("DDD","itemNew.title: "+itemNew.title)
-                Log.d("DDD","itemNew.content: "+itemNew.content)
                 listNewItem.add(itemNew)
-
-//                Log.i("XXX","it.children: "+itemNew.content)
-//                Log.i("XXX","it.children: "+itemNew.image)
-                Log.i("XXX","it.children: "+ author)
-
 
             }
 
@@ -148,6 +139,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         menuInflater.inflate(R.menu.bottom_nav, menu)
+//        menuInflater.inflate(R.menu.nav_menu, menu)
         val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
         searchView = menu.findItem(R.id.action_search).actionView as SearchView
         searchView!!.setSearchableInfo(searchManager.getSearchableInfo(componentName))
@@ -185,6 +177,10 @@ class HomeActivity : AppCompatActivity() {
                 val intent = Intent(this@HomeActivity, Settings::class.java)
                 startActivity(intent)
 
+            }
+            R.id.  bookMarkFragment -> {
+                val intent = Intent(this@HomeActivity, BookMarkActivity::class.java)
+                startActivity(intent)
             }
             else -> {}
         }

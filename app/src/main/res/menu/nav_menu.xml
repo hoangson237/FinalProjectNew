@@ -2,11 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/firstItem"
-        android:title="Home" />
+        android:title="Home"
+        android:icon="@drawable/ic_outline_home_24"/>
     <item
         android:id="@+id/secondItem"
-        android:title="Setting" />
+        android:title="BookMark"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"/>
     <item
         android:id="@+id/thirdItem"
-        android:title="Profile" />
+        android:title="Comment"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"/>
 </menu>

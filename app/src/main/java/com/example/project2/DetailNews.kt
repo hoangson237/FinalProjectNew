@@ -137,6 +137,7 @@ class DetailNews : AppCompatActivity() {
 
         }
 
+        // Khi click nút Switch
         mBookMarkBtn.setOnClickListener {
             val titleN = intent.getStringExtra("key_title")
             if (isBookMark == "true"){
@@ -154,6 +155,7 @@ class DetailNews : AppCompatActivity() {
         Log.d("ZZZ", "isBookMark: $isBookMark")
         Log.d("ZZZ", "titleN: $titleN")
 
+        // Tự bật nút khi biến isBookMark = true
         mBookMarkBtn.isChecked = isBookMark == "true"
 
     }
